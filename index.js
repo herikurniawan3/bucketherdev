@@ -1,15 +1,16 @@
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+// Impor modul yang dibutuhkan dari URL
+import { S3Client, PutObjectCommand } from "https://esm.sh/@aws-sdk/client-s3";
+import { getSignedUrl } from "https://esm.sh/@aws-sdk/s3-request-presigner";
 
 export default {
   async fetch(request, env) {
-    // Pastikan ini adalah permintaan POST ke endpoint yang benar
+    // Hanya izinkan metode POST ke path /upload
     const url = new URL(request.url);
     if (request.method !== "POST" || url.pathname !== "/upload") {
       return new Response("Not found", { status: 404 });
     }
 
-    // Ambil nama file dan tipe konten dari permintaan
+    // Ambil nama file dan tipe konten dari frontend
     const { fileName, contentType } = await request.json();
     if (!fileName || !contentType) {
       return new Response("Missing fileName or contentType", { status: 400 });
@@ -18,31 +19,31 @@ export default {
     // Inisialisasi S3 Client untuk R2
     const s3 = new S3Client({
       region: "auto",
-      endpoint: `https://${env.97b44c6a133de44177c16a7c0f2b940d}.r2.cloudflarestorage.com`,
+      endpoint: `https://${env.ACCOUNT_ID}.r2.cloudflarestorage.com`,
       credentials: {
-        accessKeyId: env.a2919e86d1fe274e1eb16a7a16586ce0,
-        secretAccessKey: env.0c32fe15810fee2973c36ff8076b5102e16101e3b16c882240e5a4e741bd2dd1,
+        accessKeyId: env.ACCESS_KEY_ID,
+        secretAccessKey: env.SECRET_ACCESS_KEY,
       },
     });
 
-    // Kunci unik untuk objek di bucket R2
+    // Buat nama file yang unik
     const key = `uploads/${Date.now()}-${fileName}`;
 
-    // Buat perintah untuk meletakkan objek
+    // Siapkan perintah untuk mengunggah
     const command = new PutObjectCommand({
-      Bucket: env.herideveloper,
+      Bucket: env.BUCKET_NAME,
       Key: key,
       ContentType: contentType,
     });
 
-    // Buat pre-signed URL yang valid selama 5 menit
+    // Buat URL unggahan yang aman, valid selama 5 menit (300 detik)
     const presignedUrl = await getSignedUrl(s3, command, { expiresIn: 300 });
 
-    // Kembalikan URL tersebut ke frontend
+    // Kirim URL tersebut kembali ke frontend
     return new Response(JSON.stringify({ presignedUrl }), {
       headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*", // Sesuaikan untuk produksi
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*' // Izinkan akses dari domain mana pun
       },
     });
   },
