@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand } from "https://esm.sh/@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand } from "https:///esm.sh/@aws-sdk/client-s3";
 import { getSignedUrl } from "https://esm.sh/@aws-sdk/s3-request-presigner";
 
 export default {
