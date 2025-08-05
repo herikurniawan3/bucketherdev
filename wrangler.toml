@@ -1,0 +1,16 @@
+# Nama worker Anda, sesuaikan jika berbeda
+name = "upload"
+
+# Lokasi file utama Worker Anda. 
+# Jika file Anda bernama index.js dan ada di folder utama, ini sudah benar.
+main = "index.js"
+
+# Tanggal kompatibilitas untuk mengaktifkan fitur modern
+compatibility_date = "2025-08-05"
+
+# Variabel lingkungan Anda (lebih baik ditaruh di sini daripada di UI)
+[vars]
+ACCOUNT_ID = "ID_AKUN_CLOUDFLARE_ANDA"
+BUCKET_NAME = "herideveloper"
+# ACCESS_KEY_ID dan SECRET_ACCESS_KEY sebaiknya diatur sebagai "Secrets" di UI Worker
+# untuk keamanan yang lebih baik.
