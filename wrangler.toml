@@ -1,5 +1,5 @@
 # Nama worker Anda, sesuaikan jika berbeda
-name = "upload"
+name = "imgku"
 
 # Lokasi file utama Worker Anda. 
 # Jika file Anda bernama index.js dan ada di folder utama, ini sudah benar.
