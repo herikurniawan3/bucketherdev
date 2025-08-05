@@ -10,7 +10,7 @@ compatibility_date = "2025-08-05"
 
 # Variabel lingkungan Anda (lebih baik ditaruh di sini daripada di UI)
 [vars]
-ACCOUNT_ID = "ID_AKUN_CLOUDFLARE_ANDA"
+ACCOUNT_ID = "97b44c6a133de44177c16a7c0f2b940d"
 BUCKET_NAME = "herideveloper"
 # ACCESS_KEY_ID dan SECRET_ACCESS_KEY sebaiknya diatur sebagai "Secrets" di UI Worker
 # untuk keamanan yang lebih baik.
